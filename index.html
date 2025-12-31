@@ -5,6 +5,10 @@
 <title>Bizim Hikâyemiz</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- ❤️ KALP FAVICON -->
+<link rel="icon" type="image/svg+xml"
+href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❤️</text></svg>">
+
 <style>
 * {
   box-sizing: border-box;
@@ -36,9 +40,7 @@ body {
 }
 
 @keyframes fall {
-  to {
-    transform: translateY(110vh);
-  }
+  to { transform: translateY(110vh); }
 }
 
 /* Kart */
@@ -55,9 +57,7 @@ body {
   z-index: 2;
 }
 
-.card.active {
-  display: block;
-}
+.card.active { display: block; }
 
 /* Başlıklar */
 h1 {
@@ -73,9 +73,7 @@ h2 {
 }
 
 /* Şifre */
-.password-screen {
-  text-align: center;
-}
+.password-screen { text-align: center; }
 
 input {
   margin-top: 18px;
@@ -99,9 +97,7 @@ button {
   font-size: 16px;
 }
 
-button:hover {
-  background: #187bcd;
-}
+button:hover { background: #187bcd; }
 
 /* Sayaç */
 .timer {
@@ -132,7 +128,7 @@ button:hover {
   opacity: 0.95;
 }
 
-/* Yeni Yıl Mesajı */
+/* Yeni Yıl */
 .newyear {
   margin-top: 28px;
   padding: 22px;
@@ -160,9 +156,7 @@ button:hover {
   animation: fadeUp 1.2s ease forwards;
 }
 
-.photo-card:nth-child(2) {
-  animation-delay: 0.3s;
-}
+.photo-card:nth-child(2) { animation-delay: 0.3s; }
 
 .photo-card img {
   width: 100%;
@@ -171,9 +165,7 @@ button:hover {
   transition: transform 0.6s ease;
 }
 
-.photo-card:hover img {
-  transform: scale(1.08);
-}
+.photo-card:hover img { transform: scale(1.08); }
 
 .photo-text {
   position: absolute;
@@ -183,30 +175,17 @@ button:hover {
   background: linear-gradient(to top, rgba(0,0,0,0.75), transparent);
 }
 
-.photo-text h3 {
-  margin: 0;
-  font-size: 1.2rem;
-}
-
-.photo-text p {
-  margin-top: 6px;
-  font-size: 0.95rem;
-  opacity: 0.9;
-}
+.photo-text h3 { margin: 0; font-size: 1.2rem; }
+.photo-text p { margin-top: 6px; font-size: 0.95rem; opacity: 0.9; }
 
 /* Animasyon */
 @keyframes fadeUp {
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+  to { transform: translateY(0); opacity: 1; }
 }
 
 /* Mobil */
 @media (max-width: 600px) {
-  .timer {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .timer { grid-template-columns: repeat(2, 1fr); }
 }
 </style>
 </head>
@@ -237,13 +216,13 @@ button:hover {
 
   <div class="text">
     O geceden beri geçen her saniye,  
-    seni ne kadar çok sevdiğimin sessiz kanıtı.
+    seni biraz daha sevdiğimin kanıtı.
   </div>
 
   <div class="newyear">
     🎄 Yeni yılımız kutlu olsun 🎄<br><br>
     Bu yıl da, sonraki tüm yıllar da  
-    yan yana, el ele, kalp kalbe olsun.
+    yan yana, el ele olsun.
   </div>
 
   <div class="photos">
@@ -266,21 +245,21 @@ button:hover {
 </div>
 
 <script>
-/* ŞİFRE */
+/* Şifre */
 const PASSWORD = "mavi";
 
 function checkPassword() {
-  const v = document.getElementById("password").value.trim().toLowerCase();
+  const v = password.value.trim().toLowerCase();
   if (v === PASSWORD) {
-    document.getElementById("lock").classList.remove("active");
-    document.getElementById("content").classList.add("active");
+    lock.classList.remove("active");
+    content.classList.add("active");
     startTimer();
   } else {
-    document.getElementById("error").textContent = "Yanlış şifre.";
+    error.textContent = "Yanlış şifre.";
   }
 }
 
-/* SAYAÇ */
+/* Sayaç */
 function startTimer() {
   const start = new Date(Date.UTC(2025, 9, 28, 21, 12, 0));
   setInterval(() => {
@@ -296,7 +275,7 @@ function startTimer() {
   }, 1000);
 }
 
-/* KAR */
+/* Kar */
 for (let i = 0; i < 60; i++) {
   const snow = document.createElement("div");
   snow.className = "snow";
