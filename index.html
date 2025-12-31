@@ -19,9 +19,29 @@ body {
   align-items: center;
   justify-content: center;
   color: #fff;
+  overflow-x: hidden;
 }
 
-/* Genel Kart */
+/* KAR TANELERİ */
+.snow {
+  position: fixed;
+  top: -10px;
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: fall linear infinite;
+  z-index: 1;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh);
+  }
+}
+
+/* Kart */
 .card {
   width: 100%;
   max-width: 900px;
@@ -31,6 +51,8 @@ body {
   padding: 34px;
   box-shadow: 0 25px 60px rgba(0,0,0,0.45);
   display: none;
+  position: relative;
+  z-index: 2;
 }
 
 .card.active {
@@ -102,16 +124,22 @@ button:hover {
   font-weight: 600;
 }
 
-.time-box small {
-  opacity: 0.8;
-}
-
 /* Metin */
 .text {
   text-align: center;
   line-height: 1.75;
   font-size: 1.05rem;
   opacity: 0.95;
+}
+
+/* Yeni Yıl Mesajı */
+.newyear {
+  margin-top: 28px;
+  padding: 22px;
+  border-radius: 18px;
+  background: rgba(30,144,255,0.18);
+  text-align: center;
+  font-size: 1.1rem;
 }
 
 /* Fotoğraflar */
@@ -140,7 +168,6 @@ button:hover {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
   transition: transform 0.6s ease;
 }
 
@@ -165,14 +192,6 @@ button:hover {
   margin-top: 6px;
   font-size: 0.95rem;
   opacity: 0.9;
-}
-
-/* Footer */
-footer {
-  margin-top: 34px;
-  text-align: center;
-  font-size: 0.9rem;
-  opacity: 0.75;
 }
 
 /* Animasyon */
@@ -210,80 +229,82 @@ footer {
   <h2>29 Ekim 2025 • 02:12</h2>
 
   <div class="timer">
-    <div class="time-box"><span id="days">0</span><small>Gün</small></div>
-    <div class="time-box"><span id="hours">0</span><small>Saat</small></div>
-    <div class="time-box"><span id="minutes">0</span><small>Dakika</small></div>
-    <div class="time-box"><span id="seconds">0</span><small>Saniye</small></div>
+    <div class="time-box"><span id="days">0</span>Gün</div>
+    <div class="time-box"><span id="hours">0</span>Saat</div>
+    <div class="time-box"><span id="minutes">0</span>Dakika</div>
+    <div class="time-box"><span id="seconds">0</span>Saniye</div>
   </div>
 
   <div class="text">
-    29 Ekim 2025 gecesi saat 02:12’de<br>
-    iki kalp aynı hikâyede buluştu.<br><br>
+    O geceden beri geçen her saniye,  
+    seni ne kadar çok sevdiğimin sessiz kanıtı.
+  </div>
 
-    O günden beri geçen her saniye<br>
-    seni biraz daha sevdiğimin kanıtı.<br><br>
-
-    İyi ki varsın.  
-    İyi ki biz olduk.
+  <div class="newyear">
+    🎄 Yeni yılımız kutlu olsun 🎄<br><br>
+    Bu yıl da, sonraki tüm yıllar da  
+    yan yana, el ele, kalp kalbe olsun.
   </div>
 
   <div class="photos">
     <div class="photo-card">
-      <img src="foto1.jpg" alt="İlk buluşmamız">
+      <img src="foto1.jpg">
       <div class="photo-text">
         <h3>İlk Buluşmamız</h3>
-        <p>El ele tuttuğumuz o an, her şeyin başladığı yer.</p>
+        <p>Her şeyin başladığı o an.</p>
       </div>
     </div>
 
     <div class="photo-card">
-      <img src="foto2.jpg" alt="İlk verdiğin toka">
+      <img src="foto2.jpg">
       <div class="photo-text">
         <h3>İlk Toka</h3>
-        <p>Küçücük ama kalbimde kocaman bir anı.</p>
+        <p>Küçücük ama kalbimde kocaman.</p>
       </div>
     </div>
   </div>
-
-  <footer>
-    Sonsuza kadar, birlikte.
-  </footer>
 </div>
 
 <script>
+/* ŞİFRE */
 const PASSWORD = "mavi";
 
 function checkPassword() {
-  const val = document.getElementById("password").value.trim().toLowerCase();
-  const err = document.getElementById("error");
-
-  if (val === PASSWORD) {
+  const v = document.getElementById("password").value.trim().toLowerCase();
+  if (v === PASSWORD) {
     document.getElementById("lock").classList.remove("active");
     document.getElementById("content").classList.add("active");
     startTimer();
   } else {
-    err.textContent = "Yanlış şifre.";
+    document.getElementById("error").textContent = "Yanlış şifre.";
   }
 }
 
+/* SAYAÇ */
 function startTimer() {
-  // UTC+5 → 29.10.2025 02:12
   const start = new Date(Date.UTC(2025, 9, 28, 21, 12, 0));
-
   setInterval(() => {
-    const now = new Date();
-    const diff = now - start;
-
+    const diff = new Date() - start;
     const s = Math.floor(diff / 1000);
     const m = Math.floor(s / 60);
     const h = Math.floor(m / 60);
     const d = Math.floor(h / 24);
-
-    document.getElementById("days").textContent = d;
-    document.getElementById("hours").textContent = h % 24;
-    document.getElementById("minutes").textContent = m % 60;
-    document.getElementById("seconds").textContent = s % 60;
+    days.textContent = d;
+    hours.textContent = h % 24;
+    minutes.textContent = m % 60;
+    seconds.textContent = s % 60;
   }, 1000);
+}
+
+/* KAR */
+for (let i = 0; i < 60; i++) {
+  const snow = document.createElement("div");
+  snow.className = "snow";
+  snow.style.left = Math.random() * 100 + "vw";
+  snow.style.animationDuration = 5 + Math.random() * 10 + "s";
+  snow.style.opacity = Math.random();
+  snow.style.transform = `scale(${Math.random()})`;
+  document.body.appendChild(snow);
 }
 </script>
 
