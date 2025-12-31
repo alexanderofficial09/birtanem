@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Bizim Hikâyemiz</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", system-ui, -apple-system;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+/* Genel Kart */
+.card {
+  width: 100%;
+  max-width: 900px;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(14px);
+  border-radius: 22px;
+  padding: 34px;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.45);
+  display: none;
+}
+
+.card.active {
+  display: block;
+}
+
+/* Başlıklar */
+h1 {
+  text-align: center;
+  font-size: 2.3rem;
+  margin-bottom: 8px;
+}
+
+h2 {
+  text-align: center;
+  font-weight: 400;
+  opacity: 0.85;
+}
+
+/* Şifre */
+.password-screen {
+  text-align: center;
+}
+
+input {
+  margin-top: 18px;
+  padding: 14px;
+  width: 220px;
+  border-radius: 14px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  text-align: center;
+}
+
+button {
+  margin-top: 18px;
+  padding: 12px 30px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  background: #1e90ff;
+  color: #fff;
+  font-size: 16px;
+}
+
+button:hover {
+  background: #187bcd;
+}
+
+/* Sayaç */
+.timer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin: 36px 0;
+}
+
+.time-box {
+  background: rgba(0,0,0,0.28);
+  padding: 20px;
+  border-radius: 18px;
+  text-align: center;
+}
+
+.time-box span {
+  display: block;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.time-box small {
+  opacity: 0.8;
+}
+
+/* Metin */
+.text {
+  text-align: center;
+  line-height: 1.75;
+  font-size: 1.05rem;
+  opacity: 0.95;
+}
+
+/* Fotoğraflar */
+.photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+  margin-top: 36px;
+}
+
+.photo-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.45);
+  transform: translateY(40px);
+  opacity: 0;
+  animation: fadeUp 1.2s ease forwards;
+}
+
+.photo-card:nth-child(2) {
+  animation-delay: 0.3s;
+}
+
+.photo-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease;
+}
+
+.photo-card:hover img {
+  transform: scale(1.08);
+}
+
+.photo-text {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 20px;
+  background: linear-gradient(to top, rgba(0,0,0,0.75), transparent);
+}
+
+.photo-text h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.photo-text p {
+  margin-top: 6px;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+/* Footer */
+footer {
+  margin-top: 34px;
+  text-align: center;
+  font-size: 0.9rem;
+  opacity: 0.75;
+}
+
+/* Animasyon */
+@keyframes fadeUp {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Mobil */
+@media (max-width: 600px) {
+  .timer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ŞİFRE -->
+<div class="card password-screen active" id="lock">
+  <h1>Bu sayfa sadece sana</h1>
+  <h2>Şifreyi biliyorsan gir 💙</h2>
+  <input type="password" id="password" placeholder="Şifre">
+  <br>
+  <button onclick="checkPassword()">Aç</button>
+  <p id="error" style="color:#ff8c8c; margin-top:12px;"></p>
+</div>
+
+<!-- İÇERİK -->
+<div class="card" id="content">
+  <h1>Biz 💙</h1>
+  <h2>29 Ekim 2025 • 02:12</h2>
+
+  <div class="timer">
+    <div class="time-box"><span id="days">0</span><small>Gün</small></div>
+    <div class="time-box"><span id="hours">0</span><small>Saat</small></div>
+    <div class="time-box"><span id="minutes">0</span><small>Dakika</small></div>
+    <div class="time-box"><span id="seconds">0</span><small>Saniye</small></div>
+  </div>
+
+  <div class="text">
+    29 Ekim 2025 gecesi saat 02:12’de<br>
+    iki kalp aynı hikâyede buluştu.<br><br>
+
+    O günden beri geçen her saniye<br>
+    seni biraz daha sevdiğimin kanıtı.<br><br>
+
+    İyi ki varsın.  
+    İyi ki biz olduk.
+  </div>
+
+  <div class="photos">
+    <div class="photo-card">
+      <img src="foto1.jpg" alt="İlk buluşmamız">
+      <div class="photo-text">
+        <h3>İlk Buluşmamız</h3>
+        <p>El ele tuttuğumuz o an, her şeyin başladığı yer.</p>
+      </div>
+    </div>
+
+    <div class="photo-card">
+      <img src="foto2.jpg" alt="İlk verdiğin toka">
+      <div class="photo-text">
+        <h3>İlk Toka</h3>
+        <p>Küçücük ama kalbimde kocaman bir anı.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Sonsuza kadar, birlikte.
+  </footer>
+</div>
+
+<script>
+const PASSWORD = "mavi";
+
+function checkPassword() {
+  const val = document.getElementById("password").value.trim().toLowerCase();
+  const err = document.getElementById("error");
+
+  if (val === PASSWORD) {
+    document.getElementById("lock").classList.remove("active");
+    document.getElementById("content").classList.add("active");
+    startTimer();
+  } else {
+    err.textContent = "Yanlış şifre.";
+  }
+}
+
+function startTimer() {
+  // UTC+5 → 29.10.2025 02:12
+  const start = new Date(Date.UTC(2025, 9, 28, 21, 12, 0));
+
+  setInterval(() => {
+    const now = new Date();
+    const diff = now - start;
+
+    const s = Math.floor(diff / 1000);
+    const m = Math.floor(s / 60);
+    const h = Math.floor(m / 60);
+    const d = Math.floor(h / 24);
+
+    document.getElementById("days").textContent = d;
+    document.getElementById("hours").textContent = h % 24;
+    document.getElementById("minutes").textContent = m % 60;
+    document.getElementById("seconds").textContent = s % 60;
+  }, 1000);
+}
+</script>
+
+</body>
+</html>
