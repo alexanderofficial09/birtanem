@@ -5,7 +5,7 @@
 <title>Bizim Hikâyemiz</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- ❤️ KALP FAVICON -->
+<!-- ❤️ Kalp favicon -->
 <link rel="icon" type="image/svg+xml"
 href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❤️</text></svg>">
 
@@ -26,7 +26,7 @@ body {
   overflow-x: hidden;
 }
 
-/* KAR TANELERİ */
+/* KAR */
 .snow {
   position: fixed;
   top: -10px;
@@ -59,18 +59,9 @@ body {
 
 .card.active { display: block; }
 
-/* Başlıklar */
-h1 {
-  text-align: center;
-  font-size: 2.3rem;
-  margin-bottom: 8px;
-}
-
-h2 {
-  text-align: center;
-  font-weight: 400;
-  opacity: 0.85;
-}
+/* Başlık */
+h1 { text-align: center; font-size: 2.3rem; }
+h2 { text-align: center; font-weight: 400; opacity: 0.85; }
 
 /* Şifre */
 .password-screen { text-align: center; }
@@ -125,10 +116,9 @@ button:hover { background: #187bcd; }
   text-align: center;
   line-height: 1.75;
   font-size: 1.05rem;
-  opacity: 0.95;
 }
 
-/* Yeni Yıl */
+/* Yeni yıl */
 .newyear {
   margin-top: 28px;
   padding: 22px;
@@ -156,16 +146,14 @@ button:hover { background: #187bcd; }
   animation: fadeUp 1.2s ease forwards;
 }
 
-.photo-card:nth-child(2) { animation-delay: 0.3s; }
+.photo-card:nth-child(2) { animation-delay: .3s; }
 
 .photo-card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s ease;
+  display: block;
 }
-
-.photo-card:hover img { transform: scale(1.08); }
 
 .photo-text {
   position: absolute;
@@ -175,16 +163,11 @@ button:hover { background: #187bcd; }
   background: linear-gradient(to top, rgba(0,0,0,0.75), transparent);
 }
 
-.photo-text h3 { margin: 0; font-size: 1.2rem; }
-.photo-text p { margin-top: 6px; font-size: 0.95rem; opacity: 0.9; }
-
-/* Animasyon */
 @keyframes fadeUp {
   to { transform: translateY(0); opacity: 1; }
 }
 
-/* Mobil */
-@media (max-width: 600px) {
+@media (max-width:600px) {
   .timer { grid-template-columns: repeat(2, 1fr); }
 }
 </style>
@@ -199,7 +182,7 @@ button:hover { background: #187bcd; }
   <input type="password" id="password" placeholder="Şifre">
   <br>
   <button onclick="checkPassword()">Aç</button>
-  <p id="error" style="color:#ff8c8c; margin-top:12px;"></p>
+  <p id="error" style="color:#ff8c8c;"></p>
 </div>
 
 <!-- İÇERİK -->
@@ -221,24 +204,23 @@ button:hover { background: #187bcd; }
 
   <div class="newyear">
     🎄 Yeni yılımız kutlu olsun 🎄<br><br>
-    Bu yıl da, sonraki tüm yıllar da  
-    yan yana, el ele olsun.
+    Bu yıl da, sonraki tüm yıllar da el ele.
   </div>
 
   <div class="photos">
     <div class="photo-card">
-      <img src="foto1.jpg">
+      <img id="foto1">
       <div class="photo-text">
         <h3>İlk Buluşmamız</h3>
-        <p>Her şeyin güzelleştiği o an.</p>
+        <p>Her şeyin başladığı an.</p>
       </div>
     </div>
 
     <div class="photo-card">
-      <img src="foto2.jpg">
+      <img id="foto2">
       <div class="photo-text">
         <h3>İlk Toka</h3>
-        <p>Küçücük ama kalbimde kocaman.</p>
+        <p>Küçük ama çok değerli.</p>
       </div>
     </div>
   </div>
@@ -249,14 +231,20 @@ button:hover { background: #187bcd; }
 const PASSWORD = "mavi";
 
 function checkPassword() {
-  const v = password.value.trim().toLowerCase();
-  if (v === PASSWORD) {
+  if (password.value.trim().toLowerCase() === PASSWORD) {
     lock.classList.remove("active");
     content.classList.add("active");
+    loadImages();
     startTimer();
   } else {
     error.textContent = "Yanlış şifre.";
   }
+}
+
+/* Fotoğraflar şifreden sonra */
+function loadImages() {
+  document.getElementById("foto1").src = "foto1.jpg";
+  document.getElementById("foto2").src = "foto2.jpg";
 }
 
 /* Sayaç */
@@ -277,13 +265,12 @@ function startTimer() {
 
 /* Kar */
 for (let i = 0; i < 60; i++) {
-  const snow = document.createElement("div");
-  snow.className = "snow";
-  snow.style.left = Math.random() * 100 + "vw";
-  snow.style.animationDuration = 5 + Math.random() * 10 + "s";
-  snow.style.opacity = Math.random();
-  snow.style.transform = `scale(${Math.random()})`;
-  document.body.appendChild(snow);
+  const s = document.createElement("div");
+  s.className = "snow";
+  s.style.left = Math.random() * 100 + "vw";
+  s.style.animationDuration = 5 + Math.random() * 10 + "s";
+  s.style.opacity = Math.random();
+  document.body.appendChild(s);
 }
 </script>
 
