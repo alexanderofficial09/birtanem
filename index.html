@@ -5,187 +5,102 @@
 <title>Bizim Hikâyemiz</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- ❌ SOSYAL MEDYA ÖNİZLEMESİNİ KAPAT -->
+<meta property="og:title" content="">
+<meta property="og:description" content="">
+<meta property="og:image" content="">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="none">
+
 <!-- ❤️ Kalp favicon -->
 <link rel="icon" type="image/svg+xml"
 href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❤️</text></svg>">
 
 <style>
-* {
-  box-sizing: border-box;
-  font-family: "Segoe UI", system-ui, -apple-system;
+*{box-sizing:border-box;font-family:"Segoe UI",system-ui}
+body{
+  margin:0;min-height:100vh;
+  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;overflow-x:hidden
 }
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  overflow-x: hidden;
+.snow{
+  position:fixed;top:-10px;width:8px;height:8px;
+  background:#fff;border-radius:50%;
+  animation:fall linear infinite;z-index:1
 }
-
-/* KAR */
-.snow {
-  position: fixed;
-  top: -10px;
-  width: 8px;
-  height: 8px;
-  background: white;
-  border-radius: 50%;
-  opacity: 0.8;
-  animation: fall linear infinite;
-  z-index: 1;
+@keyframes fall{to{transform:translateY(110vh)}}
+.card{
+  width:100%;max-width:900px;
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(14px);
+  border-radius:22px;padding:34px;
+  box-shadow:0 25px 60px rgba(0,0,0,.45);
+  display:none;position:relative;z-index:2
 }
-
-@keyframes fall {
-  to { transform: translateY(110vh); }
+.card.active{display:block}
+h1{text-align:center;font-size:2.3rem}
+h2{text-align:center;font-weight:400;opacity:.85}
+.password-screen{text-align:center}
+input{
+  margin-top:18px;padding:14px;width:220px;
+  border-radius:14px;border:none;font-size:16px;text-align:center
 }
-
-/* Kart */
-.card {
-  width: 100%;
-  max-width: 900px;
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(14px);
-  border-radius: 22px;
-  padding: 34px;
-  box-shadow: 0 25px 60px rgba(0,0,0,0.45);
-  display: none;
-  position: relative;
-  z-index: 2;
+button{
+  margin-top:18px;padding:12px 30px;
+  border-radius:14px;border:none;cursor:pointer;
+  background:#1e90ff;color:#fff;font-size:16px
 }
-
-.card.active { display: block; }
-
-/* Başlık */
-h1 { text-align: center; font-size: 2.3rem; }
-h2 { text-align: center; font-weight: 400; opacity: 0.85; }
-
-/* Şifre */
-.password-screen { text-align: center; }
-
-input {
-  margin-top: 18px;
-  padding: 14px;
-  width: 220px;
-  border-radius: 14px;
-  border: none;
-  outline: none;
-  font-size: 16px;
-  text-align: center;
+.timer{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:18px;margin:36px 0
 }
-
-button {
-  margin-top: 18px;
-  padding: 12px 30px;
-  border-radius: 14px;
-  border: none;
-  cursor: pointer;
-  background: #1e90ff;
-  color: #fff;
-  font-size: 16px;
+.time-box{
+  background:rgba(0,0,0,.28);
+  padding:20px;border-radius:18px;text-align:center
 }
-
-button:hover { background: #187bcd; }
-
-/* Sayaç */
-.timer {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
-  margin: 36px 0;
+.time-box span{font-size:2rem;font-weight:600}
+.text{text-align:center;line-height:1.75}
+.newyear{
+  margin-top:28px;padding:22px;border-radius:18px;
+  background:rgba(30,144,255,.18);text-align:center
 }
-
-.time-box {
-  background: rgba(0,0,0,0.28);
-  padding: 20px;
-  border-radius: 18px;
-  text-align: center;
+.photos{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:24px;margin-top:36px
 }
-
-.time-box span {
-  display: block;
-  font-size: 2rem;
-  font-weight: 600;
+.photo-card{
+  position:relative;overflow:hidden;border-radius:20px;
+  box-shadow:0 18px 40px rgba(0,0,0,.45);
+  opacity:0;transform:translateY(40px);
+  animation:fadeUp 1.2s ease forwards
 }
-
-/* Metin */
-.text {
-  text-align: center;
-  line-height: 1.75;
-  font-size: 1.05rem;
+.photo-card:nth-child(2){animation-delay:.3s}
+.photo-card img{width:100%;height:100%;object-fit:cover}
+.photo-text{
+  position:absolute;bottom:0;width:100%;
+  padding:20px;
+  background:linear-gradient(to top,rgba(0,0,0,.75),transparent)
 }
-
-/* Yeni yıl */
-.newyear {
-  margin-top: 28px;
-  padding: 22px;
-  border-radius: 18px;
-  background: rgba(30,144,255,0.18);
-  text-align: center;
-  font-size: 1.1rem;
-}
-
-/* Fotoğraflar */
-.photos {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 24px;
-  margin-top: 36px;
-}
-
-.photo-card {
-  position: relative;
-  overflow: hidden;
-  border-radius: 20px;
-  box-shadow: 0 18px 40px rgba(0,0,0,0.45);
-  transform: translateY(40px);
-  opacity: 0;
-  animation: fadeUp 1.2s ease forwards;
-}
-
-.photo-card:nth-child(2) { animation-delay: .3s; }
-
-.photo-card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.photo-text {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  padding: 20px;
-  background: linear-gradient(to top, rgba(0,0,0,0.75), transparent);
-}
-
-@keyframes fadeUp {
-  to { transform: translateY(0); opacity: 1; }
-}
-
-@media (max-width:600px) {
-  .timer { grid-template-columns: repeat(2, 1fr); }
+@keyframes fadeUp{to{opacity:1;transform:none}}
+@media(max-width:600px){
+  .timer{grid-template-columns:repeat(2,1fr)}
 }
 </style>
 </head>
 
 <body>
 
-<!-- ŞİFRE -->
 <div class="card password-screen active" id="lock">
   <h1>Bu sayfa sadece sana</h1>
   <h2>Şifreyi biliyorsan gir 💙</h2>
   <input type="password" id="password" placeholder="Şifre">
   <br>
   <button onclick="checkPassword()">Aç</button>
-  <p id="error" style="color:#ff8c8c;"></p>
+  <p id="error" style="color:#ff8c8c"></p>
 </div>
 
-<!-- İÇERİK -->
 <div class="card" id="content">
   <h1>Biz 💙</h1>
   <h2>29 Ekim 2025 • 02:12</h2>
@@ -198,7 +113,7 @@ button:hover { background: #187bcd; }
   </div>
 
   <div class="text">
-    O geceden beri geçen her saniye,  
+    O geceden beri geçen her saniye,<br>
     seni biraz daha sevdiğimin kanıtı.
   </div>
 
@@ -227,49 +142,34 @@ button:hover { background: #187bcd; }
 </div>
 
 <script>
-/* Şifre */
-const PASSWORD = "mavi";
+const PASSWORD="mavi";
 
-function checkPassword() {
-  if (password.value.trim().toLowerCase() === PASSWORD) {
+function checkPassword(){
+  if(password.value.trim().toLowerCase()===PASSWORD){
     lock.classList.remove("active");
     content.classList.add("active");
-    loadImages();
+    foto1.src="foto1.jpg";
+    foto2.src="foto2.jpg";
     startTimer();
-  } else {
-    error.textContent = "Yanlış şifre.";
-  }
+  }else error.textContent="Yanlış şifre.";
 }
 
-/* Fotoğraflar şifreden sonra */
-function loadImages() {
-  document.getElementById("foto1").src = "foto1.jpg";
-  document.getElementById("foto2").src = "foto2.jpg";
+function startTimer(){
+  const start=new Date(Date.UTC(2025,9,28,21,12,0));
+  setInterval(()=>{
+    const d=new Date()-start;
+    seconds.textContent=Math.floor(d/1000)%60;
+    minutes.textContent=Math.floor(d/60000)%60;
+    hours.textContent=Math.floor(d/3600000)%24;
+    days.textContent=Math.floor(d/86400000);
+  },1000);
 }
 
-/* Sayaç */
-function startTimer() {
-  const start = new Date(Date.UTC(2025, 9, 28, 21, 12, 0));
-  setInterval(() => {
-    const diff = new Date() - start;
-    const s = Math.floor(diff / 1000);
-    const m = Math.floor(s / 60);
-    const h = Math.floor(m / 60);
-    const d = Math.floor(h / 24);
-    days.textContent = d;
-    hours.textContent = h % 24;
-    minutes.textContent = m % 60;
-    seconds.textContent = s % 60;
-  }, 1000);
-}
-
-/* Kar */
-for (let i = 0; i < 60; i++) {
-  const s = document.createElement("div");
-  s.className = "snow";
-  s.style.left = Math.random() * 100 + "vw";
-  s.style.animationDuration = 5 + Math.random() * 10 + "s";
-  s.style.opacity = Math.random();
+for(let i=0;i<60;i++){
+  const s=document.createElement("div");
+  s.className="snow";
+  s.style.left=Math.random()*100+"vw";
+  s.style.animationDuration=5+Math.random()*10+"s";
   document.body.appendChild(s);
 }
 </script>
