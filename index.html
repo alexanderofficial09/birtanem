@@ -2,175 +2,1212 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>Bizim Hikâyemiz</title>
+<title>Bizim Hikâyemiz 💙</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- ❌ SOSYAL MEDYA ÖNİZLEMESİNİ KAPAT -->
+<!-- ❌ SOSYAL MEDYA ÖNİZLEMESİNİ KAPAT (WhatsApp, Instagram vb. sürprizi bozmasın) -->
 <meta property="og:title" content="">
 <meta property="og:description" content="">
 <meta property="og:image" content="">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="none">
 
-<!-- ❤️ Kalp favicon -->
+<!-- ❤️ Kalp Favicon -->
 <link rel="icon" type="image/svg+xml"
-href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❤️</text></svg>">
+href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💙</text></svg>">
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,400&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 
 <style>
-*{box-sizing:border-box;font-family:"Segoe UI",system-ui}
-body{
-  margin:0;min-height:100vh;
-  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-  display:flex;align-items:center;justify-content:center;
-  color:#fff;overflow-x:hidden
+:root {
+  --primary: #1e90ff;
+  --primary-glow: rgba(30, 144, 255, 0.45);
+  --accent-cyan: #00e5ff;
+  --accent-gold: #ffd166;
+  --bg-gradient: linear-gradient(135deg, #09131b 0%, #102331 50%, #1a3a4d 100%);
+  --glass-bg: rgba(255, 255, 255, 0.07);
+  --glass-border: rgba(255, 255, 255, 0.14);
+  --glass-shine: rgba(255, 255, 255, 0.25);
+  --text-main: #f0f6fc;
+  --text-muted: rgba(240, 246, 252, 0.75);
 }
-.snow{
-  position:fixed;top:-10px;width:8px;height:8px;
-  background:#fff;border-radius:50%;
-  animation:fall linear infinite;z-index:1
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Outfit', sans-serif;
+  -webkit-tap-highlight-color: transparent;
 }
-@keyframes fall{to{transform:translateY(110vh)}}
-.card{
-  width:100%;max-width:900px;
-  background:rgba(255,255,255,.08);
-  backdrop-filter:blur(14px);
-  border-radius:22px;padding:34px;
-  box-shadow:0 25px 60px rgba(0,0,0,.45);
-  display:none;position:relative;z-index:2
+
+body {
+  min-height: 100vh;
+  background: var(--bg-gradient);
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+  position: relative;
+  padding: 30px 16px;
 }
-.card.active{display:block}
-h1{text-align:center;font-size:2.3rem}
-h2{text-align:center;font-weight:400;opacity:.85}
-.password-screen{text-align:center}
-input{
-  margin-top:18px;padding:14px;width:220px;
-  border-radius:14px;border:none;font-size:16px;text-align:center
+
+/* Canvas & Arka Plan Parçacıkları (Kar & Yıldızlar) */
+#snow-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
 }
-button{
-  margin-top:18px;padding:12px 30px;
-  border-radius:14px;border:none;cursor:pointer;
-  background:#1e90ff;color:#fff;font-size:16px
+
+/* Tıklamada Uçuşan Kalpler */
+.click-heart {
+  position: fixed;
+  pointer-events: none;
+  font-size: 24px;
+  animation: floatHeart 1.4s ease-out forwards;
+  z-index: 9999;
+  user-select: none;
 }
-.timer{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  gap:18px;margin:36px 0
+
+@keyframes floatHeart {
+  0% { opacity: 1; transform: translate(0, 0) scale(0.6) rotate(0deg); }
+  50% { opacity: 0.9; transform: translate(var(--tx), -60px) scale(1.2) rotate(var(--rot)); }
+  100% { opacity: 0; transform: translate(var(--tx), -120px) scale(1.5) rotate(calc(var(--rot) * 1.5)); }
 }
-.time-box{
-  background:rgba(0,0,0,.28);
-  padding:20px;border-radius:18px;text-align:center
+
+/* Ana Kart Yapısı */
+.card {
+  width: 100%;
+  max-width: 880px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 28px;
+  padding: 40px 36px;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5), inset 0 1px 0 var(--glass-shine);
+  display: none;
+  position: relative;
+  z-index: 2;
+  transition: transform 0.4s ease, opacity 0.4s ease;
 }
-.time-box span{font-size:2rem;font-weight:600}
-.text{text-align:center;line-height:1.75}
-.newyear{
-  margin-top:28px;padding:22px;border-radius:18px;
-  background:rgba(30,144,255,.18);text-align:center
+
+.card.active {
+  display: block;
+  animation: cardIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
-.photos{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:24px;margin-top:36px
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(30px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
-.photo-card{
-  position:relative;overflow:hidden;border-radius:20px;
-  box-shadow:0 18px 40px rgba(0,0,0,.45);
-  opacity:0;transform:translateY(40px);
-  animation:fadeUp 1.2s ease forwards
+
+/* Başlıklar */
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem;
+  letter-spacing: -0.5px;
+  text-align: center;
+  background: linear-gradient(135deg, #ffffff 40%, var(--accent-cyan) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
 }
-.photo-card:nth-child(2){animation-delay:.3s}
-.photo-card img{width:100%;height:100%;object-fit:cover}
-.photo-text{
-  position:absolute;bottom:0;width:100%;
-  padding:20px;
-  background:linear-gradient(to top,rgba(0,0,0,.75),transparent)
+
+h2 {
+  text-align: center;
+  font-weight: 400;
+  color: var(--text-muted);
+  font-size: 1.15rem;
+  margin-bottom: 24px;
 }
-@keyframes fadeUp{to{opacity:1;transform:none}}
-@media(max-width:600px){
-  .timer{grid-template-columns:repeat(2,1fr)}
+
+/* Kilit Ekranı */
+.password-screen {
+  text-align: center;
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+.lock-icon {
+  font-size: 3.2rem;
+  margin-bottom: 12px;
+  display: inline-block;
+  filter: drop-shadow(0 0 15px var(--primary-glow));
+  animation: pulse 2s ease infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+.input-group {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  margin: 18px auto 0;
+}
+
+input {
+  width: 100%;
+  padding: 15px 20px;
+  border-radius: 16px;
+  border: 1px solid var(--glass-border);
+  background: rgba(0, 0, 0, 0.35);
+  color: #fff;
+  font-size: 17px;
+  text-align: center;
+  outline: none;
+  transition: all 0.3s;
+}
+
+input:focus {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 18px var(--primary-glow);
+  background: rgba(0, 0, 0, 0.5);
+}
+
+button.btn-primary {
+  margin-top: 20px;
+  padding: 14px 42px;
+  border-radius: 16px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, #1e90ff, #00b4d8);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  box-shadow: 0 8px 25px var(--primary-glow);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+button.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(30, 144, 255, 0.6);
+}
+
+button.btn-primary:active {
+  transform: translateY(1px);
+}
+
+.hint-link {
+  display: inline-block;
+  margin-top: 18px;
+  font-size: 13.5px;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+
+.hint-link:hover {
+  color: var(--accent-cyan);
+}
+
+.shake {
+  animation: shakeAnim 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes shakeAnim {
+  10%, 90% { transform: translate3d(-2px, 0, 0); }
+  20%, 80% { transform: translate3d(4px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+  40%, 60% { transform: translate3d(6px, 0, 0); }
+}
+
+#error {
+  margin-top: 14px;
+  font-size: 14px;
+  min-height: 20px;
+  color: #ff7675;
+  font-weight: 500;
+}
+
+/* Sayaç Alanı */
+.timer-container {
+  margin: 32px 0 24px;
+}
+
+.timer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.time-box {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--glass-border);
+  padding: 22px 14px;
+  border-radius: 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.time-box:hover {
+  transform: translateY(-3px);
+  border-color: rgba(0, 229, 255, 0.4);
+}
+
+.time-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+}
+
+.time-box span {
+  display: block;
+  font-size: 2.6rem;
+  font-weight: 700;
+  line-height: 1.1;
+  background: linear-gradient(180deg, #ffffff 40%, #c4e4ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
+}
+
+.time-label {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+/* Kalp Atışı ve İstatistik Şeridi */
+.stats-strip {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.stat-chip {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 8px 16px;
+  border-radius: 30px;
+  font-size: 13.5px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stat-chip strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Romantik Söz Bloğu */
+.quote-card {
+  text-align: center;
+  margin: 30px 0 20px;
+  padding: 20px;
+  position: relative;
+}
+
+.quote-card::before, .quote-card::after {
+  content: '“';
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  color: rgba(30, 144, 255, 0.35);
+  position: absolute;
+  line-height: 1;
+}
+
+.quote-card::before { top: 0; left: 12%; }
+.quote-card::after { content: '”'; bottom: -10px; right: 12%; }
+
+.romantic-message {
+  font-size: 1.25rem;
+  line-height: 1.8;
+  color: #e2ecf5;
+  font-weight: 300;
+}
+
+/* 🎂 DOĞUM GÜNÜ ÖZEL ALANI (12.10.2008) */
+.birthday-section {
+  margin: 32px 0;
+  padding: 28px 24px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(255, 209, 102, 0.14) 0%, rgba(30, 144, 255, 0.15) 100%);
+  border: 1px solid rgba(255, 209, 102, 0.3);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.birthday-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 209, 102, 0.2);
+  color: var(--accent-gold);
+  border: 1px solid rgba(255, 209, 102, 0.4);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 14px;
+}
+
+.birthday-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.7rem;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.birthday-text {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #e0e8f0;
+  max-width: 650px;
+  margin: 0 auto 20px;
+}
+
+/* Mum & Dilek Kartı */
+.cake-interactive {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px dashed rgba(255, 209, 102, 0.35);
+  border-radius: 20px;
+  padding: 18px 20px;
+  display: inline-block;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+.cake-interactive:hover {
+  background: rgba(255, 209, 102, 0.15);
+  transform: translateY(-2px);
+  border-color: var(--accent-gold);
+}
+
+.candle-icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 6px;
+  transition: transform 0.3s ease;
+}
+
+.cake-instruction {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--accent-gold);
+}
+
+.wish-result {
+  margin-top: 14px;
+  font-size: 1.05rem;
+  color: #fff;
+  font-style: italic;
+  display: none;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+/* İnteraktif Butonlar Alanı */
+.interactive-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin: 28px 0 20px;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--glass-border);
+  color: #fff;
+  padding: 13px 24px;
+  border-radius: 16px;
+  font-size: 14.5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  transition: all 0.3s;
+}
+
+.action-btn:hover {
+  background: rgba(30, 144, 255, 0.2);
+  border-color: var(--accent-cyan);
+  transform: translateY(-2px);
+}
+
+/* Aşk Notu Gösterim Alanı */
+.love-note-box {
+  background: rgba(0, 229, 255, 0.08);
+  border: 1px dashed rgba(0, 229, 255, 0.4);
+  border-radius: 16px;
+  padding: 16px 22px;
+  margin: 0 auto 24px;
+  max-width: 600px;
+  text-align: center;
+  display: none;
+  animation: fadeIn 0.4s ease;
+}
+
+.love-note-box.show {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Yeni Yıl & Özel Kutlama Bloğu */
+.newyear {
+  margin: 28px 0;
+  padding: 22px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(30, 144, 255, 0.2) 0%, rgba(0, 229, 255, 0.1) 100%);
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  text-align: center;
+  font-size: 1.12rem;
+  line-height: 1.8;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Fotoğraf Galerisi (2 Fotoğraf Düzeni) */
+.section-title {
+  text-align: center;
+  font-size: 1.35rem;
+  margin: 36px 0 20px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.section-title::before, .section-title::after {
+  content: '';
+  height: 1px;
+  width: 40px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.photos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 10px;
+}
+
+.photo-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 22px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+  border: 1px solid var(--glass-border);
+  aspect-ratio: 4/5;
+  background: #102331;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.photo-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(0, 229, 255, 0.5);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.6), 0 0 20px rgba(30, 144, 255, 0.3);
+}
+
+.photo-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+  display: block;
+}
+
+.photo-card:hover img {
+  transform: scale(1.06);
+}
+
+/* Görsel Bulunamadığında Fallback Şık Tasarım */
+.placeholder-photo {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(20, 45, 65, 0.8), rgba(12, 28, 40, 0.9));
+  color: var(--text-muted);
+  gap: 12px;
+  padding: 20px;
+  text-align: center;
+}
+
+.placeholder-photo .icon {
+  font-size: 3rem;
+  filter: drop-shadow(0 0 10px var(--primary-glow));
+}
+
+.photo-text {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 24px 20px;
+  background: linear-gradient(to top, rgba(9, 19, 27, 0.95) 0%, rgba(9, 19, 27, 0.6) 70%, transparent 100%);
+  pointer-events: none;
+}
+
+.photo-text h3 {
+  font-size: 1.25rem;
+  margin-bottom: 4px;
+  color: #fff;
+}
+
+.photo-text p {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}
+
+/* Footer / Yeniden Kilitle */
+.page-footer {
+  margin-top: 40px;
+  text-align: center;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.relock-btn {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 13px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s;
+}
+
+.relock-btn:hover {
+  color: var(--accent-cyan);
+}
+
+/* Mektup Modal Penceresi */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(4, 9, 13, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.letter-modal {
+  background: #fdfbf7;
+  color: #2c3e50;
+  width: 100%;
+  max-width: 580px;
+  border-radius: 20px;
+  padding: 40px 34px;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+  position: relative;
+  transform: scale(0.92);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  background-image: radial-gradient(#e6ded2 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.modal-overlay.active .letter-modal {
+  transform: scale(1);
+}
+
+.letter-modal h2 {
+  font-family: 'Playfair Display', serif;
+  color: #1b263b;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.letter-modal p {
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: #3d4a5d;
+  margin-bottom: 16px;
+}
+
+.letter-sign {
+  font-family: 'Caveat', cursive;
+  font-size: 1.8rem;
+  text-align: right;
+  margin-top: 24px;
+  color: #1e90ff;
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 26px;
+  cursor: pointer;
+  color: #7f8c8d;
+  line-height: 1;
+}
+
+.modal-close:hover {
+  color: #2c3e50;
+}
+
+/* Lightbox Görsel Büyütme */
+#lightbox-modal img {
+  max-width: 90vw;
+  max-height: 85vh;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive Düzen */
+@media (max-width: 680px) {
+  .card {
+    padding: 30px 20px;
+    border-radius: 22px;
+  }
+  h1 { font-size: 2.2rem; }
+  .timer {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .time-box {
+    padding: 16px 10px;
+  }
+  .time-box span {
+    font-size: 2.1rem;
+  }
+  .photos {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .quote-card::before, .quote-card::after { display: none; }
 }
 </style>
 </head>
 
 <body>
 
+<!-- Kar ve Işıltı Efekti İçin Canvas -->
+<canvas id="snow-canvas"></canvas>
+
+<!-- 🔒 KİLİT EKRANI -->
 <div class="card password-screen active" id="lock">
+  <div class="lock-icon">🔒</div>
   <h1>Bu sayfa sadece sana</h1>
-  <h2>Şifreyi biliyorsan gir 💙</h2>
-  <input type="password" id="password" placeholder="Şifre">
-  <br>
-  <button onclick="checkPassword()">Aç</button>
-  <p id="error" style="color:#ff8c8c"></p>
+  <h2>Bizim en özel anlarımız burada gizli 💙</h2>
+
+  <div class="input-group">
+    <input type="password" id="password" placeholder="Şifreyi giriniz..." autocomplete="off">
+  </div>
+  
+  <button class="btn-primary" onclick="checkPassword()">Sayfayı Aç</button>
+  <div id="error"></div>
+  
+  <div>
+    <span class="hint-link" onclick="showHint()">💡 İpucu ister misin?</span>
+  </div>
 </div>
 
+<!-- 💖 ANA İÇERİK EKRANI -->
 <div class="card" id="content">
   <h1>Biz 💙</h1>
   <h2>29 Ekim 2025 • 02:12</h2>
 
-  <div class="timer">
-    <div class="time-box"><span id="days">0</span>Gün</div>
-    <div class="time-box"><span id="hours">0</span>Saat</div>
-    <div class="time-box"><span id="minutes">0</span>Dakika</div>
-    <div class="time-box"><span id="seconds">0</span>Saniye</div>
+  <!-- Sayaç -->
+  <div class="timer-container">
+    <div class="timer">
+      <div class="time-box">
+        <span id="days">0</span>
+        <div class="time-label">Gün</div>
+      </div>
+      <div class="time-box">
+        <span id="hours">0</span>
+        <div class="time-label">Saat</div>
+      </div>
+      <div class="time-box">
+        <span id="minutes">0</span>
+        <div class="time-label">Dakika</div>
+      </div>
+      <div class="time-box">
+        <span id="seconds">0</span>
+        <div class="time-label">Saniye</div>
+      </div>
+    </div>
+
+    <!-- Canlı Aşk Metrikleri -->
+    <div class="stats-strip">
+      <div class="stat-chip">
+        <span>💓</span> Kalbimiz yaklaşık <strong id="heartbeat-count">0</strong> kez birbirimiz için attı
+      </div>
+      <div class="stat-chip">
+        <span>⏳</span> Toplam <strong id="total-hours">0</strong> saat
+      </div>
+    </div>
   </div>
 
-  <div class="text">
-    O geceden beri geçen her saniye,<br>
-    seni biraz daha sevdiğimin kanıtı.
+  <!-- Romantik Söz -->
+  <div class="quote-card">
+    <p class="romantic-message">
+      O geceden beri geçen her saniye,<br>
+      seni biraz daha sevdiğimin en güzel kanıtı.
+    </p>
   </div>
 
+  <!-- 🎂 12 EKİM 2008 DOĞUM GÜNÜ ÖZEL KARTI -->
+  <div class="birthday-section">
+    <div class="birthday-badge">
+      <span>🎂</span> 12 Ekim 2008 • <span id="age-badge">18. Yaş</span>
+    </div>
+    <h3 class="birthday-title" id="birthday-heading">İyi ki Doğdun, İyi ki Varsın 💖</h3>
+    <p class="birthday-text" id="birthday-subtext">
+      12 Ekim 2008'de dünyaya gelen o güzel insan, bugün benim tüm dünyam oldu. 
+      Hayatıma kattığın tüm güzellikler ve huzur için teşekkür ederim birtanem.
+    </p>
+
+    <!-- İnteraktif Dilek ve Mum Üfleme -->
+    <div class="cake-interactive" id="candle-box" onclick="blowCandle()">
+      <span class="candle-icon" id="candle-icon">🕯️🎂</span>
+      <span class="cake-instruction" id="cake-instruction">Bir dilek tut ve mumu üfle ✨</span>
+    </div>
+    <div class="wish-result" id="wish-result">
+      🎉 Dileğin kabul olsun sevgilim... Sen benim kabul olmuş en güzel dileğimsin! 💙
+    </div>
+  </div>
+
+  <!-- İnteraktif Butonlar Alanı -->
+  <div class="interactive-actions">
+    <button class="action-btn" onclick="openLetter()">
+      <span>✉️</span> Sana Bir Mektup Var
+    </button>
+    <button class="action-btn" onclick="drawLoveNote()">
+      <span>✨</span> Aşk Kavanozundan Not Çek
+    </button>
+  </div>
+
+  <!-- Aşk Notu Gösterim Kutusu -->
+  <div class="love-note-box" id="love-note-box">
+    <span style="font-size: 20px;">💙</span>
+    <p id="love-note-text" style="margin-top: 6px; font-weight: 500;"></p>
+  </div>
+
+  <!-- Yeni Yıl / Kutlama Kartı -->
   <div class="newyear">
-    🎄 Yeni yılımız kutlu olsun 🎄<br><br>
-    Bu yıl da, sonraki tüm yıllar da el ele.
+    🎄 <strong>Yeni yılımız kutlu olsun</strong> 🎄<br>
+    Bu yıl da, sonraki tüm yıllar da hep el ele, göz göze...
   </div>
+
+  <!-- Fotoğraf Galerisi (2 Fotoğraf) -->
+  <div class="section-title">En Güzel Anlarımız</div>
 
   <div class="photos">
-    <div class="photo-card">
-      <img id="foto1">
+    <!-- 1. Fotoğraf -->
+    <div class="photo-card" onclick="openLightbox('foto1.jpg', 'İlk Buluşmamız')">
+      <img id="foto1" src="foto1.jpg" alt="İlk Buluşmamız" onerror="handleImageError(this, 'İlk Buluşmamız', '☕')">
       <div class="photo-text">
         <h3>İlk Buluşmamız</h3>
-        <p>Her şeyin başladığı an.</p>
+        <p>Her şeyin başladığı, zamanın durduğu an.</p>
       </div>
     </div>
 
-    <div class="photo-card">
-      <img id="foto2">
+    <!-- 2. Fotoğraf -->
+    <div class="photo-card" onclick="openLightbox('foto2.jpg', 'İlk Toka')">
+      <img id="foto2" src="foto2.jpg" alt="İlk Toka" onerror="handleImageError(this, 'İlk Toka', '🎀')">
       <div class="photo-text">
         <h3>İlk Toka</h3>
-        <p>Küçük ama çok değerli.</p>
+        <p>Küçük ama dünyalara bedel bir hatıra.</p>
       </div>
     </div>
+  </div>
+
+  <!-- Sayfa Sonu / Yeniden Kilitle Butonu -->
+  <div class="page-footer">
+    <button class="relock-btn" onclick="relockPage()">
+      🔒 Sayfayı Yeniden Kilitle
+    </button>
   </div>
 </div>
 
+<!-- 💌 MEKTUP MODAL PENCERESİ -->
+<div class="modal-overlay" id="letter-modal">
+  <div class="letter-modal">
+    <button class="modal-close" onclick="closeLetter()">&times;</button>
+    <h2>Sevgilim,</h2>
+    <p>
+      Hayatıma girdiğin o günden beri dünyam çok daha renkli, çok daha huzurlu. Seninle geçen her an, 
+      birlikte güldüğümüz her kahkaha benim için paha biçilemez bir hazine.
+    </p>
+    <p>
+      12 Ekim'de doğduğun gün başlayan hikâyen, 29 Ekim gecesi benim hayatımla birleşti ve benim en büyük mucizem oldu. 
+      İyi ki varsın, iyi ki yanımdasın. Birlikte büyüteceğimiz daha nice güzel yaşlara ve yıllara...
+    </p>
+    <div class="letter-sign">Seni Çok Seven Biri 💙</div>
+  </div>
+</div>
+
+<!-- 🔍 LIGHTBOX (FOTOĞRAF BÜYÜTME MODAL) -->
+<div class="modal-overlay" id="lightbox-modal" onclick="closeLightbox()">
+  <img id="lightbox-img" src="" alt="Büyük Görünüm">
+</div>
+
 <script>
-const PASSWORD="mavi";
+/* ========================================================
+   AYARLAR VE DEĞİŞKENLER
+   ======================================================== */
+const PASSWORD = "mavi";
+const HINT_TEXT = "İpucu: Gökyüzünün, denizin ve en derin duyguların rengi... 💙";
 
-function checkPassword(){
-  if(password.value.trim().toLowerCase()===PASSWORD){
-    lock.classList.remove("active");
-    content.classList.add("active");
-    foto1.src="foto1.jpg";
-    foto2.src="foto2.jpg";
+// Başlangıç Tarihi: 29 Ekim 2025 Saat 02:12 (Yerel Saat)
+const START_DATE = new Date(2025, 9, 29, 2, 12, 0);
+
+// Doğum Günü: 12 Ekim 2008
+const BIRTH_YEAR = 2008;
+const BIRTH_MONTH = 9; // Ekim ayı (0-indeksli: 9 = Ekim)
+const BIRTH_DAY = 12;
+
+// Aşk Kavanozu Notları
+const LOVE_NOTES = [
+  "Gözlerinin içine her baktığımda içimi ısıtan o huzur için...",
+  "Birlikte saçmalayıp çocuk gibi gülebildiğimiz için...",
+  "Yanımdaki varlığınla bana her an güvende hissettirdiğin için...",
+  "Ufacık şeylerle bile yüzümü güldürmeyi başardığın için...",
+  "Sesini duyduğum an günümün tüm yorgunluğunu unutturduğun için...",
+  "Ellerimin arasına en çok senin ellerin yakıştığı için...",
+  "Bana sevginin ne kadar saf ve güzel olabileceğini gösterdiğin için...",
+  "Hayallerimin başrolünde hep sen olduğun için...",
+  "12 Ekim'de dünyaya gelip hayatıma doğduğun için...",
+  "En zor anlarımda bile sıcacık bir sarılmanla dünyamı güzelleştirdiğin için..."
+];
+
+/* ========================================================
+   ŞİFRE VE GİRİŞ İŞLEMLERİ
+   ======================================================== */
+const lockCard = document.getElementById("lock");
+const contentCard = document.getElementById("content");
+const passwordInput = document.getElementById("password");
+const errorEl = document.getElementById("error");
+
+// Enter tuşuna basıldığında açma desteği
+passwordInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") checkPassword();
+});
+
+function checkPassword() {
+  const entered = passwordInput.value.trim().toLowerCase();
+  
+  if (entered === PASSWORD) {
+    errorEl.textContent = "";
+    lockCard.classList.remove("active");
+    contentCard.classList.add("active");
+    
+    // Sayacı ve doğum günü kutlamasını başlat
     startTimer();
-  }else error.textContent="Yanlış şifre.";
+    initBirthday();
+    
+    // Açılış konfeti/kalp patlaması
+    triggerExplosion(["💙", "🤍", "✨", "🎂"]);
+  } else {
+    errorEl.textContent = "Hatalı şifre, lütfen tekrar dene 💙";
+    lockCard.classList.add("shake");
+    setTimeout(() => lockCard.classList.remove("shake"), 500);
+  }
 }
 
-function startTimer(){
-  const start=new Date(Date.UTC(2025,9,28,21,12,0));
-  setInterval(()=>{
-    const d=new Date()-start;
-    seconds.textContent=Math.floor(d/1000)%60;
-    minutes.textContent=Math.floor(d/60000)%60;
-    hours.textContent=Math.floor(d/3600000)%24;
-    days.textContent=Math.floor(d/86400000);
-  },1000);
+function showHint() {
+  alert(HINT_TEXT);
 }
 
-for(let i=0;i<60;i++){
-  const s=document.createElement("div");
-  s.className="snow";
-  s.style.left=Math.random()*100+"vw";
-  s.style.animationDuration=5+Math.random()*10+"s";
-  document.body.appendChild(s);
+function relockPage() {
+  contentCard.classList.remove("active");
+  lockCard.classList.add("active");
+  passwordInput.value = "";
+  errorEl.textContent = "";
+}
+
+/* ========================================================
+   CANLI ZAMAN VE AŞK SAYACI
+   ======================================================== */
+let timerInterval = null;
+
+function startTimer() {
+  if (timerInterval) clearInterval(timerInterval);
+
+  function update() {
+    const now = new Date();
+    let diff = now - START_DATE;
+    
+    if (diff < 0) diff = 0;
+
+    const seconds = Math.floor(diff / 1000) % 60;
+    const minutes = Math.floor(diff / (1000 * 60)) % 60;
+    const hours = Math.floor(diff / (1000 * 60 * 60)) % 24;
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+    document.getElementById("seconds").textContent = seconds;
+    document.getElementById("minutes").textContent = minutes;
+    document.getElementById("hours").textContent = hours;
+    document.getElementById("days").textContent = days;
+
+    // Ek Metrikler
+    const totalMinutes = Math.floor(diff / (1000 * 60));
+    const totalHours = Math.floor(diff / (1000 * 60 * 60));
+    const estHeartbeats = Math.floor(totalMinutes * 75); // ~75 bpm ortalama
+
+    document.getElementById("total-hours").textContent = totalHours.toLocaleString("tr-TR");
+    document.getElementById("heartbeat-count").textContent = estHeartbeats.toLocaleString("tr-TR");
+  }
+
+  update();
+  timerInterval = setInterval(update, 1000);
+}
+
+/* ========================================================
+   🎂 12 EKİM 2008 DOĞUM GÜNÜ HESAPLAYICI & ETKİLEŞİM
+   ======================================================== */
+function initBirthday() {
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  let age = currentYear - BIRTH_YEAR;
+
+  // Doğum günü henüz gelmediyse yaş 1 eksiktir
+  const birthdayThisYear = new Date(currentYear, BIRTH_MONTH, BIRTH_DAY);
+  if (now < birthdayThisYear) {
+    age--;
+  }
+
+  const ageBadge = document.getElementById("age-badge");
+  const heading = document.getElementById("birthday-heading");
+  const subtext = document.getElementById("birthday-subtext");
+
+  ageBadge.textContent = `${age}. Yaş`;
+
+  // Eğer bugün doğum günüyse (12 Ekim)
+  if (now.getMonth() === BIRTH_MONTH && now.getDate() === BIRTH_DAY) {
+    heading.textContent = `🎉 İYİ Kİ DOĞDUN BİRTANEM! (${age}. Yaşın Kutlu Olsun!) 🎉`;
+    subtext.textContent = `Bugün senin günün! Dünyaya geldiğin ve hayatıma güneş gibi doğduğun için teşekkür ederim. Birlikte geçireceğimiz musmutlu bir yaş olsun! 💖`;
+  }
+}
+
+let candleBlown = false;
+function blowCandle() {
+  if (candleBlown) return;
+  candleBlown = true;
+
+  const candleIcon = document.getElementById("candle-icon");
+  const instruction = document.getElementById("cake-instruction");
+  const wishResult = document.getElementById("wish-result");
+
+  candleIcon.textContent = "💨🎂";
+  instruction.textContent = "Mum üflendi! ✨";
+  wishResult.style.display = "block";
+
+  // Doğum günü kutlama patlaması
+  triggerExplosion(["🎂", "✨", "🎉", "💙", "🌟", "🎈"]);
+}
+
+/* ========================================================
+   FOTOĞRAF YEDEĞİ (Görsel Yoksa Kırılmayı Önleme)
+   ======================================================== */
+function handleImageError(imgElement, title, iconSymbol) {
+  const card = imgElement.parentElement;
+  imgElement.style.display = "none";
+  
+  const placeholder = document.createElement("div");
+  placeholder.className = "placeholder-photo";
+  placeholder.innerHTML = `
+    <div class="icon">${iconSymbol}</div>
+    <div style="font-weight: 500; font-size: 1.1rem; color: #fff;">${title}</div>
+    <div style="font-size: 0.85rem; opacity: 0.7;">Görselinizi eklemek için:<br><code>${imgElement.getAttribute("src")}</code></div>
+  `;
+  card.insertBefore(placeholder, card.firstChild);
+}
+
+/* ========================================================
+   AŞK KAVANOZU VE MEKTUP MODALLARI
+   ======================================================== */
+let lastNoteIndex = -1;
+function drawLoveNote() {
+  let index;
+  do {
+    index = Math.floor(Math.random() * LOVE_NOTES.length);
+  } while (index === lastNoteIndex && LOVE_NOTES.length > 1);
+  
+  lastNoteIndex = index;
+  const box = document.getElementById("love-note-box");
+  const text = document.getElementById("love-note-text");
+  
+  text.textContent = LOVE_NOTES[index];
+  box.classList.remove("show");
+  void box.offsetWidth;
+  box.classList.add("show");
+}
+
+function openLetter() {
+  document.getElementById("letter-modal").classList.add("active");
+}
+
+function closeLetter() {
+  document.getElementById("letter-modal").classList.remove("active");
+}
+
+function openLightbox(src, alt) {
+  const modal = document.getElementById("lightbox-modal");
+  const img = document.getElementById("lightbox-img");
+  img.src = src;
+  img.alt = alt;
+  modal.classList.add("active");
+}
+
+function closeLightbox() {
+  document.getElementById("lightbox-modal").classList.remove("active");
+}
+
+/* ========================================================
+   CANVAS ARKA PLAN PARÇACIKLARI (KAR & IŞILTILAR)
+   ======================================================== */
+const canvas = document.getElementById("snow-canvas");
+const ctx = canvas.getContext("2d");
+let flakes = [];
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+
+class Flake {
+  constructor() {
+    this.reset();
+  }
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * -canvas.height;
+    this.size = Math.random() * 2.5 + 1;
+    this.speed = Math.random() * 1.2 + 0.5;
+    this.opacity = Math.random() * 0.7 + 0.2;
+    this.swing = Math.random() * 2;
+    this.swingSpeed = Math.random() * 0.02 + 0.01;
+    this.swingOffset = Math.random() * Math.PI * 2;
+  }
+  update() {
+    this.y += this.speed;
+    this.swingOffset += this.swingSpeed;
+    this.x += Math.sin(this.swingOffset) * 0.5;
+
+    if (this.y > canvas.height) {
+      this.reset();
+      this.y = -5;
+    }
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(220, 240, 255, ${this.opacity})`;
+    ctx.shadowBlur = this.size * 2;
+    ctx.shadowColor = "rgba(0, 229, 255, 0.4)";
+    ctx.fill();
+  }
+}
+
+for (let i = 0; i < 70; i++) {
+  const f = new Flake();
+  f.y = Math.random() * canvas.height;
+  flakes.push(f);
+}
+
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  flakes.forEach(f => {
+    f.update();
+    f.draw();
+  });
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+/* ========================================================
+   TIKLAMA İLE UÇUŞAN KALP VE KUTLAMA EFEKTLERİ
+   ======================================================== */
+const clickSymbols = ["💙", "🤍", "✨", "💫", "💎"];
+
+window.addEventListener("click", (e) => {
+  if (e.target.tagName === "INPUT") return;
+
+  const el = document.createElement("div");
+  el.className = "click-heart";
+  el.textContent = clickSymbols[Math.floor(Math.random() * clickSymbols.length)];
+  el.style.left = `${e.clientX - 12}px`;
+  el.style.top = `${e.clientY - 12}px`;
+  
+  const tx = (Math.random() - 0.5) * 80;
+  const rot = (Math.random() - 0.5) * 60;
+  el.style.setProperty("--tx", `${tx}px`);
+  el.style.setProperty("--rot", `${rot}deg`);
+
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 1400);
+});
+
+function triggerExplosion(symbols) {
+  const cx = window.innerWidth / 2;
+  const cy = window.innerHeight / 2;
+  for (let i = 0; i < 22; i++) {
+    setTimeout(() => {
+      const el = document.createElement("div");
+      el.className = "click-heart";
+      el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+      el.style.left = `${cx + (Math.random() - 0.5) * 240}px`;
+      el.style.top = `${cy + (Math.random() - 0.5) * 180}px`;
+      el.style.setProperty("--tx", `${(Math.random() - 0.5) * 140}px`);
+      el.style.setProperty("--rot", `${(Math.random() - 0.5) * 90}deg`);
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 1400);
+    }, i * 50);
+  }
 }
 </script>
 
